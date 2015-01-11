@@ -24,17 +24,19 @@ public class ColorHistogram {
 				}
 			}
 		}
+		
+		int blur = 1;
 		for(int dy = 0; dy < h; dy++) {
 			for(int dx = 0; dx < w; dx++) {
 				int pixel = “ü—Í‰æ‘œ.p[y+dy][x+dx];
 				int r = r(pixel) / 8;
 				int g = g(pixel) / 8;
 				int b = b(pixel) / 8;
-				for(int db = -2; db <= 2; db++) {
+				for(int db = -blur; db <= blur; db++) {
 					if(b + db < 0 || b + db >= 32) { continue; }
-					for(int dg = -2; dg <= 2; dg++) {
+					for(int dg = -blur; dg <= blur; dg++) {
 						if(g + dg < 0 || g + dg >= 32) { continue; }
-						for(int dr = -2; dr <= 2; dr++) {
+						for(int dr = -blur; dr <= blur; dr++) {
 							if(r + dr < 0 || r + dr >= 32) { continue; }
 							histogram[b+db][g+dg][r+dr] += (3 - Math.abs(db)) + (3 - Math.abs(dg)) + (3 - Math.abs(dr)) - 2;
 						}
