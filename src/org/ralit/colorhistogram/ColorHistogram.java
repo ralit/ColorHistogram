@@ -1,12 +1,6 @@
 package org.ralit.colorhistogram;
 
-import static org.ralit.colorhistogram.ImageUtility.b;
-import static org.ralit.colorhistogram.ImageUtility.g;
-import static org.ralit.colorhistogram.ImageUtility.i2b;
-import static org.ralit.colorhistogram.ImageUtility.r;
-import static org.ralit.colorhistogram.ImageUtility.rgb2ycbcr;
-import static org.ralit.colorhistogram.ImageUtility.y;
-
+import static org.ralit.colorhistogram.ImageUtility.*;
 import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -20,7 +14,7 @@ public class ColorHistogram {
 	private Image 入力画像;
 	private int[][][] histogram;
 	
-	public ColorHistogram(String 入力画像パス, String 出力ヒストグラムパス, int x, int y, int w, int h) throws IOException {
+	public ColorHistogram(String 入力画像パス, String 出力ヒストグラムパス, String 可視化ディレクトリ, int x, int y, int w, int h) throws IOException {
 		入力画像 = readFile(入力画像パス);
 		histogram = new int[32][32][32];
 		for(int b = 0; b < 32; b++) {
@@ -49,6 +43,7 @@ public class ColorHistogram {
 			}
 		}
 		writeHistogram(出力ヒストグラムパス);
+		writeHistogramPoints(histogram, 可視化ディレクトリ);
 	}
 	
 	public Image getImage() {

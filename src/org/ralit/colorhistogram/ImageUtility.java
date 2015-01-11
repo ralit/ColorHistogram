@@ -298,32 +298,57 @@ public class ImageUtility{
 	 */
 	public static void writeHistogramPoints(final int[][][] histogram, final String outputDir) throws IOException {
 
-
-		
-		for (Point point : v) {
-			mutableRGB[Math.max(0, point.y - 1)][Math.max(0, point.x - 1)] = color;
-			mutableRGB[Math.max(0, point.y - 1)][point.x] = color;
-			mutableRGB[Math.max(0, point.y - 1)][Math.min(point.x + 1, w-1)] = color;
-			mutableRGB[point.y][Math.max(0, point.x - 1)] = color;
-			mutableRGB[point.y][point.x] = color;
-			mutableRGB[point.y][Math.min(point.x + 1, w-1)] = color;
-			mutableRGB[Math.min(h-1, point.y + 1)][Math.max(0, point.x - 1)] = color;
-			mutableRGB[Math.min(h-1, point.y + 1)][point.x] = color;
-			mutableRGB[Math.min(h-1, point.y + 1)][Math.min(point.x + 1, w-1)] = color;
-		}
-		
-		BufferedImage write = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
-		for (int y = 0; y < h; y++) {
-			for (int x = 0; x < w; x++) {
-				write.setRGB(x, y, mutableRGB[y][x]);
+		for(int b = 0; b < 256; b++) {
+			int[][] mutableRGB = new int[256][256];
+			for (int y = 0; y < 256; y++) {
+				for (int x = 0; x < 256; x++) {
+					mutableRGB[y][x] = rgb(255, 255, 255);
+				}
 			}
+			
+			ArrayList<Point> v0 = new ArrayList<Point>();
+			for(int g = 0; g < 256; g++) {
+				for(int r = 0; r < 256; r++) {
+					if(histogram[b][g][r] != 0) {
+						v0.add(new Point(r, g));
+					}
+				}
+			}
+			
+			Point[] v = new Point[v0.size()];
+			for(int i = 0; i < v0.size(); i++) {
+				v[i] = v0.get(i);
+			}
+			
+			int color = rgb(255, 0, 0);
+			int w = 256;
+			int h = 256;
+			for (Point point : v) {
+				mutableRGB[Math.max(0, point.y - 1)][Math.max(0, point.x - 1)] = color;
+				mutableRGB[Math.max(0, point.y - 1)][point.x] = color;
+				mutableRGB[Math.max(0, point.y - 1)][Math.min(point.x + 1, w-1)] = color;
+				mutableRGB[point.y][Math.max(0, point.x - 1)] = color;
+				mutableRGB[point.y][point.x] = color;
+				mutableRGB[point.y][Math.min(point.x + 1, w-1)] = color;
+				mutableRGB[Math.min(h-1, point.y + 1)][Math.max(0, point.x - 1)] = color;
+				mutableRGB[Math.min(h-1, point.y + 1)][point.x] = color;
+				mutableRGB[Math.min(h-1, point.y + 1)][Math.min(point.x + 1, w-1)] = color;
+			}
+			
+			BufferedImage write = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+			for (int y = 0; y < h; y++) {
+				for (int x = 0; x < w; x++) {
+					write.setRGB(x, y, mutableRGB[y][x]);
+				}
+			}
+			File file = new File(outputDir + b + "_");
+			file.mkdirs();
+			ImageIO.write(write, "png", file);
+			mutableRGB = null;
+			write = null;
+			file = null;
+
 		}
-		File file = new File(outputFilePath);
-		file.mkdirs();
-		ImageIO.write(write, "png", file);
-		mutableRGB = null;
-		write = null;
-		file = null;
 	}
 }
 

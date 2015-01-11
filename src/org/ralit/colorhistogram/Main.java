@@ -13,6 +13,7 @@ public class Main {
 		ColorHistogram colorHistogram = new ColorHistogram(
 				HOME + "/Desktop/Snakes/p388-nemu-yumemi.jpg",
 				HOME + "/Desktop/Snakes/color_histogram.txt",
+				HOME + "/Desktop/Snakes/color_histogram/",
 				200, 174,
 				88, 336
 				);
