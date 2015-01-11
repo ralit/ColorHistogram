@@ -298,17 +298,17 @@ public class ImageUtility{
 	 */
 	public static void writeHistogramPoints(final int[][][] histogram, final String outputDir) throws IOException {
 
-		for(int b = 0; b < 256; b++) {
-			int[][] mutableRGB = new int[256][256];
-			for (int y = 0; y < 256; y++) {
-				for (int x = 0; x < 256; x++) {
+		for(int b = 0; b < 32; b++) {
+			int[][] mutableRGB = new int[32][32];
+			for (int y = 0; y < 32; y++) {
+				for (int x = 0; x < 32; x++) {
 					mutableRGB[y][x] = rgb(255, 255, 255);
 				}
 			}
 			
 			ArrayList<Point> v0 = new ArrayList<Point>();
-			for(int g = 0; g < 256; g++) {
-				for(int r = 0; r < 256; r++) {
+			for(int g = 0; g < 32; g++) {
+				for(int r = 0; r < 32; r++) {
 					if(histogram[b][g][r] != 0) {
 						v0.add(new Point(r, g));
 					}
@@ -321,8 +321,8 @@ public class ImageUtility{
 			}
 			
 			int color = rgb(255, 0, 0);
-			int w = 256;
-			int h = 256;
+			int w = 32;
+			int h = 32;
 			for (Point point : v) {
 				mutableRGB[Math.max(0, point.y - 1)][Math.max(0, point.x - 1)] = color;
 				mutableRGB[Math.max(0, point.y - 1)][point.x] = color;
