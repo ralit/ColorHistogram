@@ -38,7 +38,7 @@ public class ColorHistogram {
 						if(g + dg < 0 || g + dg >= 32) { continue; }
 						for(int dr = -blur; dr <= blur; dr++) {
 							if(r + dr < 0 || r + dr >= 32) { continue; }
-							histogram[b+db][g+dg][r+dr] += (3 - Math.abs(db)) + (3 - Math.abs(dg)) + (3 - Math.abs(dr)) - 2;
+							histogram[b+db][g+dg][r+dr] += (blur+1 - Math.abs(db)) + (blur+1 - Math.abs(dg)) + (blur+1 - Math.abs(dr)) - 2;
 						}
 					}
 				}
