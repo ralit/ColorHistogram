@@ -116,6 +116,21 @@ public class ImageUtility{
 		return ycrcb & 0xff;
 	}
 
+
+	public static void writeBitmap(final int[][] RGB, final String outputFilePath) throws IOException {
+		int h = RGB.length;
+		int w = RGB[0].length;
+		BufferedImage write = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+		for (int y = 0; y < h; y++) {
+			for (int x = 0; x < w; x++) {
+				write.setRGB(x, y, RGB[y][x]);
+			}
+		}
+		File file = new File(outputFilePath);
+		file.mkdirs();
+		ImageIO.write(write, "jpg", file);
+	}
+	
 	/**
 	 * 輝度情報のみの配列から画像を書き出す
 	 * @param gray byte[][]配列であることに注意
